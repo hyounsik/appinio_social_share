@@ -75,7 +75,8 @@ public class SwiftAppinioSocialSharePlugin: NSObject, FlutterPlugin, SharingDele
           shareUtil.copyToClipboard(args: args!, result: result)
           break
       case FACEBOOK:
-          shareUtil.shareToFacebookPost(args:args!, result: result,delegate: self)
+          // shareUtil.shareToFacebookPost(args:args!, result: result,delegate: self)
+          shareUtil.shareToFacebookFeedLink(args:args!, result: result,delegate: self)
           break
       case TELEGRAM:
           shareUtil.shareToTelegram(args:args!, result:result)
