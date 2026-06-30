@@ -27,7 +27,31 @@ public class ShareUtil{
     let argImages: String  = "images";
     let argVideoFile: String  = "videoFile";
 
-
+    public func shareToFacebookFeedLink(args: [String: Any?], result: @escaping FlutterResult, delegate: SharingDelegate) {
+        guard let urlString = args["message"] as? String,
+              let url = URL(string: urlString) else {
+            result(ERROR)
+            return
+        }
+        let content = ShareLinkContent()
+        content.contentURL = url
+        if let quote = args["hashtag"] as? String, !quote.isEmpty {
+            content.quote = quote
+        }
+        let dialog = ShareDialog(
+            viewController: UIApplication.shared.windows.first!.rootViewController,
+            content: content,
+            delegate: delegate
+        )
+        do {
+            try dialog.validate()
+        } catch {
+            result(ERROR)
+            return
+        }
+        dialog.show()
+        result(self.SUCCESS)
+    }
     
     public func getInstalledApps(result: @escaping FlutterResult){
         let apps = [["instagram","instagram"],["facebook-stories","facebook_stories"],["whatsapp","whatsapp"],["tg","telegram"],["fb-messenger","messenger"],["tiktok","snssdk1233"],["instagram-stories","instagram_stories"],["twitter","twitter"],["sms","message"]]
