@@ -328,7 +328,10 @@ public class ShareUtil{
         content.photos = photos
         content.hashtag = Hashtag(message!)
         let dialog = ShareDialog(
-            viewController: UIApplication.shared.windows.first!.rootViewController,
+            viewController: UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first { $0.isKeyWindow }?.rootViewController,
             content: content,
             delegate: delegate
         )
